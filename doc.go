@@ -7,5 +7,5 @@
 //
 // It is a set of composable functions, not a framework: each consumer keeps
 // its own main and imports only the pieces it needs. Auth, sessions, CSRF,
-// and routing are out of scope; see DESIGN-DECISIONS.md.
+// and routing are out of scope by design.
 package nitrokit

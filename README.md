@@ -98,7 +98,7 @@ func main() {
 			http.Error(w, "slow down", http.StatusTooManyRequests)
 			return
 		}
-		if err := tmpl.Render(w, r, "home.html", nil); err != nil {
+		if err := tmpl.Render(w, r, "home.html", http.StatusOK, nil); err != nil {
 			logger.Error("render", "err", err)
 			http.Error(w, "internal error", http.StatusInternalServerError)
 		}
@@ -210,7 +210,7 @@ out of the Docker build context. Never use a `replace` in `go.mod`: a
 
 ## Out of scope
 
-Permanent, unless re-decided in `DESIGN-DECISIONS.md`:
+Permanent, unless re-decided in the design log:
 
 - **Auth, sessions, CSRF.** The existing implementations genuinely differ;
   forcing one shape means designing an auth library.
@@ -225,7 +225,7 @@ Permanent, unless re-decided in `DESIGN-DECISIONS.md`:
 - `make cover` — coverage summary
 - `make release` — lint and race, then tagging instructions
 
-Every extraction records the reasoning behind any deviation in
-[DESIGN-DECISIONS.md](DESIGN-DECISIONS.md). Read it before changing an
-exported signature: once consumers import a tagged version, the API is a
-contract.
+Every extraction records the reasoning behind any deviation in an
+internal design log. Once consumers import a tagged version, the API is
+a contract: exported signatures do not change without a re-decision
+there.

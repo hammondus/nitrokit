@@ -1,7 +1,7 @@
 # Roadmap
 
 Candidate additions that belong at the kit layer, in likely order.
-Each becomes a DESIGN-DECISIONS.md entry when work starts; nothing here
+Each becomes a `private/DESIGN-DECISIONS.md` entry when work starts; nothing here
 is committed to until a consumer needs it.
 
 ## Compression middleware
