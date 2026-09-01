@@ -1,0 +1,9 @@
+# go.work is per-machine wiring to sibling modules; it must not travel with
+# the repo or into any build context.
+go.work
+go.work.sum
+coverage.out
+
+# Never published: the workspace survey, per-project adoption notes, and
+# provenance key describe the private development environment. See CLAUDE.md.
+private/
