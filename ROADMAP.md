@@ -35,6 +35,27 @@ buys little; revisit if nitro fronts a public site where handshake
 latency matters. If adopted: an opt-in `RunTLS` variant so consumers
 that skip it never link quic-go.
 
+## encoding/json/v2
+
+Not before it leaves `GOEXPERIMENT`. As of Go 1.27 every file in
+`encoding/json/v2` is guarded by `goexperiment.jsonv2`, so importing it
+would force every consumer to build with that experiment set — a
+build-environment dependency, and an API that can still change.
+
+Revisit when a stable release ships it unguarded. The swap is confined
+to `json.go`: `writeJSONBytes` already takes the marshal function, and
+`WriteJSON` keeps marshalling to bytes before writing, since v2's
+`MarshalWrite` streams and would turn a marshal failure back into a
+truncated 200. v1 gains v2's engine on graduation, so performance is
+not a reason to move early.
+
+The decision to make then is whether `ReadJSON` adopts v2's stricter
+defaults: case-sensitive field matching and duplicate-key rejection.
+Both harden a request decoder against parser differentials, and both
+are consumer-visible — a client sending `Name` for `name` goes from
+accepted to 400, and the error text copied into the 400 body changes.
+That is a `private/DESIGN-DECISIONS.md` entry, not a routine edit.
+
 ## Previously deferred
 
 The adoption survey's smaller "extract when a third consumer appears"
