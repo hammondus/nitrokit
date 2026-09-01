@@ -71,7 +71,9 @@ func TrustPrivateProxies() *ProxyTrust {
 }
 
 func (p *ProxyTrust) trusted(a netip.Addr) bool {
-	if !a.IsValid() {
+	// A nil ProxyTrust trusts no one, same as the zero value: the secure
+	// default should not depend on whether the caller holds a pointer.
+	if p == nil || !a.IsValid() {
 		return false
 	}
 	a = a.Unmap()

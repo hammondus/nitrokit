@@ -173,4 +173,11 @@ func TestClientIPZeroValueTrustsNoOne(t *testing.T) {
 	if got := p.ClientIP(r).String(); got != "127.0.0.1" {
 		t.Errorf("ClientIP = %s, want 127.0.0.1 (zero value must ignore the header)", got)
 	}
+
+	// A nil pointer is the same secure default, not a panic — a test that
+	// builds a server struct without wiring the trust list should still run.
+	var np *nitrokit.ProxyTrust
+	if got := np.ClientIP(r).String(); got != "127.0.0.1" {
+		t.Errorf("nil ClientIP = %s, want 127.0.0.1", got)
+	}
 }
